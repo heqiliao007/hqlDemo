@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<form action="http://www.baidu.com" method="get" id="form">
+			用户名：<input type="text" id="userName" name="userName" check="required"/></br>
+			密码：<input type="password" id="pwd" name="pwd" check="complex" rule="6-12"/></br>
+			再来一次：<input type="password" id="pwdrp" name="pwdrp" /></br>
+			邮箱：<input type="text" id="emali" name="emali" check="rule"/></br>
+			qq：<input type="text" id="qq" name="qq"/></br>
+			<input type="submit" value="提交"/>
+		</form>
+		<script type="text/javascript" src="js/jquery-1.11.0.js" ></script>
+		<script type="text/javascript" src="js/jQuery.form.js" ></script>
+		<script>
+			$("#form").checkform();
+			
+		</script>
+	</body>
+</html>

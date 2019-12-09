@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+	    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1.0, user-scalable=no" />
+		<title>费用明细</title>
+		<link rel="stylesheet" type="text/css" href="css/common.css"/>
+		<link rel="stylesheet" type="text/css" href="css/check-pay.css"/>
+		<script type="text/javascript" src="js/jquery-1.10.2.js"></script>
+		<script type="text/javascript" src="js/vconsole.min.js"></script>
+		<script src="js/mui.min.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript" src="js/common_module.js"></script>
+	</head>
+	<body>
+		<!--查交水费--交费中-->
+		<div class="conter">
+		    <!--header-->
+		    <div class="header">
+		        <span class="header_span"><img src="img/logo.png" alt="" /></span>
+		    </div>
+		    <!--conter-->
+		    <div class="conters" style="background-color: #EAF9F9;padding-bottom: 6rem;">
+		        <!--conter_title-->
+		        <div class="content_head" style="border: none;">
+	                <div class="icons">
+	                    <img src="./img/check-ing@2x.png">
+	                </div>
+	                <div class="title"><span>交费中</span></div>
+	            </div>
+		    </div>
+		</div>
+	</body>
+	<!--<script type="text/javascript" src="js/check-pay-ing.js"></script>-->
+	<script>
+		const url_prefix = "http://szgk.sz-water.com.cn/payservice/";
+		//取出paymentSn
+		let paymentSn = localStorage.getItem('paymentSn');
+		// 测试paymentSn c3bfa90e0ad4435f8f786eafd8f21f8d
+		let obj = {"paymentSn":paymentSn};
+		//stateSuc判断状态
+		let stateSuc = false;
+		//获取customerCode和billmonth
+		let customerCode = window.atob(common_fn_getCode("customerCode"));
+		let billmonth = window.atob(common_fn_getCode("billmonth"));
+		function state(){
+			$.ajax({
+		        url: url_prefix + "pay/payStatus",
+		        type: 'POST',
+		        timeout:180000,
+		        data: JSON.stringify(obj),
+		        cache: false,
+		        dataType: 'json',
+		        contentType: 'application/json;charset=UTF-8',
+		        processData: false,
+		        success: function (res) {
+		        	if(res.statusCode == 0){
+		        		console.log(res)
+		        		//给stateSuc赋值
+		        		stateSuc = res.succeed;
+		        		let data = JSON.parse(res.content)
+						//console.log(stateSuc)
+						//判断失败
+						let failAmount = data.failAmount;
+						//失败编号
+						let failListNum='';
+						failListNum += data.failList.map( item => {
+						    return item.customerid;
+						});
+						console.log(failListNum)
+						//成功
+		        		if(failAmount == 0){
+							//如果要跳转了  即可删除paymenrSn
+		    				localStorage.removeItem('paymentSn');
+							//	window.location.href = 'check-pay-certificate.html?billmonth=' + billmonth + '&customerCode=' + customerCode;
+		    				window.location.href = 'check-pay-certificate.html?billmonth=' + window.btoa(billmonth) + '&customerCode=' + window.btoa(customerCode);
+						//失败
+				        }else if(failAmount > 0){
+				        	//跳转失败页面 url做处理
+		    				localStorage.removeItem('paymentSn');
+							window.location.href = 'check-pay-fail.html?failListNum='+window.btoa(failListNum);
+				        }
+		        	}else{
+						console.log('error');
+		        	}
+		        },
+				error:function(request){
+					console.log(request);
+				}
+		    })
+		}
+		//等待效果+刷新stateSuc状态
+		var timerWait = setInterval(() => {
+			state();
+		}, 3000)
+		//执行一次 stateSuc仍然为false的时候将跳转繁忙
+		var timerBusy = setTimeout(() => {
+		//	console.log(stateSuc)
+			//清除定时器
+			clearInterval(timerWait)
+		    if(!stateSuc){
+		    	localStorage.removeItem('paymentSn');
+				window.location.href = 'check-pay-busy.html';
+		    }
+		}, 60000)
+	</script>
+</html>
