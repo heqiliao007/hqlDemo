@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js"></script>
+    <style>
+        /* name为fade 所以都以fade开头 如果你使用一个没有名字的 <transition>，则 v- 是这些类名的默认前缀。 */
+        /* 显示动画 */
+        /* fade-enter第二帧移除 */
+        .fade-enter{
+            opacity: 0;
+        }
+        /* .fade-enter-active是贯穿的 */
+        .fade-enter-active{
+            transition: opacity 3s;
+        }
+        /* 隐藏动画 */
+         /* 离开动画的第二帧增加fade-leave-active */
+        .fade-leave-to{
+            opacity: 0;
+        }
+        /* 贯穿 */
+        .fade-leave-active{
+            transition: opacity 3s;
+        }
+    </style>
+</head>
+<body>
+    <div id="root">
+        <!-- 当有transition标签包裹时 自动构建动画流程 name随便取-->
+        <transition name='fade'>
+            <!-- v-show是display：none v-if是真正的切换 -->
+            <div v-show='show'>hello world</div>
+        </transition>
+        <button @click='handle'>切换</button>
+    </div>
+    <script>
+        var vm=new Vue({
+            el:'#root',
+            data:{
+                show:true
+            },
+            methods:{
+                handle:function(){
+                    this.show=!this.show;
+                }
+            }
+
+        })
+    </script>
+</body>
+</html>

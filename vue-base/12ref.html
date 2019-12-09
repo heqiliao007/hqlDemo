@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js"></script>
+</head>
+<body>
+    <div id="root">
+        <div ref='hello' @click='handleClick'>
+                hello
+        </div>
+        <!-- 父组件监听change事件 -->
+        <counter ref='one' @change='handlechange'></counter>
+        <counter ref='two' @change='handlechange'></counter>
+        <div>{{total}}</div>
+    </div>
+    <script>
+    Vue.component('counter',{
+        data:function(){
+            return{
+                number:0
+            }
+        },
+        methods:{
+            handleref:function(){
+                this.number++;
+                // 子组件触发一个change事件
+                this.$emit('change');
+            }
+        },
+        template:'<div @click=handleref>{{number}}</div>'
+    })
+    var vm=new Vue({
+        el:'#root',
+        data:{
+            total:0
+        },
+        methods:{
+            handleClick:function(){
+                console.log(this.$refs.hello.innerHTML)
+            },
+            handlechange:function(){
+                console.log(this.$refs.one.number);
+                console.log(this.$refs.two.number);
+                this.total=this.$refs.one.number+this.$refs.two.number;
+                console.log(this.total);
+            }
+        }
+    })
+    </script>
+</body>
+</html>

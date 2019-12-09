@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js"></script>
+</head>
+<body>
+    <div id="root">
+        <Child-one v-if="type==='child-one'"></Child-one>
+        <Child-two v-if="type==='child-two'"></Child-two>
+        <!-- 动态标签 自动根据数据变化-->
+        <!-- <component :is='type'></component> -->
+        <button @click='handleBtn'>change</button>
+    </div>
+    <script>
+        //心得：vue的组件的props属性支持驼峰命名,不支持连接线命名,使用是用连接线进行赋值或者数据绑定!
+        // 有短横线时注意大小写
+        Vue.component('child-one',{
+            // template:'<div>child-one</div>'
+            // v-once把第一次渲染后的数据放在内存里 从内存里拿出 性能更高
+            template:'<div v-once>child-one</div>'
+        })
+        Vue.component('child-two',{
+            // v-once直接放在内存里 提升展示效率
+            template:'<div v-once>child-two</div>'
+        })
+        var vm=new Vue({
+            el:"#root",
+            data:{
+                type:'child-one'
+            },
+            methods:{
+                handleBtn:function(){
+                    this.type = (this.type == 'child-one'?'child-two':'child-one');
+                }
+            }
+        })
+    </script>
+</body>
+</html>

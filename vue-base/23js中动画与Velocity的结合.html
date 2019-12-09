@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js"></script>
+    <script src="js/velocity.js"></script>
+</head>
+<body>
+    <div id="root">
+        <!-- 钩子动画 绑定事件被渲染之前before-enter-->
+        <transition name='fade' 
+                    @before-enter='beforeEnter'
+                    @enter='enter'
+                    @after-enter='afterEnter'
+                    @before-leave='beforeLeave'
+                    
+        >
+            <div v-show='show'>hellow world</div>
+        </transition>
+        <button @click='handle'>toggle</button>
+    </div>
+    <script>
+        var vm=new Vue({
+            el:"#root",
+            data:{
+                show:true
+            },
+            methods:{
+                handle:function(){
+                    this.show=!this.show;
+                },
+                // 动画开始执行之前
+                beforeEnter:function(el){
+                    el.style.color='red';
+                    el.style.opacity=0;
+                },
+                // 动画开始执行
+                // 第二个参数回调函数
+                enter:function(el,done){
+                    setTimeout(()=>{
+                        el.style.color='green'
+                    },2000),
+                    setTimeout(()=>{
+                        //动画执行完后调用done
+                        done();
+                    },4000);
+                    Velocity(el,{
+                        opacity:1
+                    },{
+                        duration:1000,
+                        complate:done
+                        })
+                },
+                afterEnter:function(el){
+                    el.style.color='black';
+                    console.log("动画结束")
+                },
+                beforeLeave:function(el){
+                    el.style.color='pink'
+                }
+            }
+        })
+    </script>
+    
+</body>

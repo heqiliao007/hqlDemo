@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js"></script>
+    <style>
+        .activated{
+            color: red;
+        }
+        .activated-one{
+            font-size: 24px;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <!-- <div @click="handleClick"
+        :class="{activated:isActivated}"> -->
+        <!-- class和数组绑定 内容既是变量，可以有多个变量 -->
+        <!-- 可以动态添加类或删除类 -->
+        <div @click='handleClick' :class='[activated,one]'>
+            Hello world
+        </div>
+    </div>
+    <script>
+    var vm=new Vue({
+        el:"#app",
+        data:{
+            // isActivated:false
+            activated:'',
+            one:'activated-one'
+        },
+       methods:{
+        handleClick:function(){
+            this.isActivated=!this.isActivated;
+            if(this.activated === 'activated'){
+                this.activated="";
+                console.log("111")
+            }else{
+                this.activated = 'activated';
+                console.log("222")
+            }
+            // this.activated=this.activated==='activated' ? "" : "activated"
+        }
+       }
+    })
+    </script>
+</body>
+</html>

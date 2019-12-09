@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="jquery-1.11.3.min.js"></script>
+</head>
+<body>
+    <!-- jquery这种方式是基于mvp模式的 
+        M：模型
+        V：试图
+        P：控制器 直接操作dom 大量的代码写在这里面都是在操作dom
+    -->
+    <div>
+        <input type="text" id="input"/>
+        <button id='btn'>提交</button>
+        <ul id="ul"></ul>
+    </div>
+    <script>
+        function Page(){
+
+        }
+        $.extend(Page.prototype,{
+            init:function(){
+                this.bindEvents()
+            },
+            bindEvents:function(){
+                // 提高性能，选择器返回到jq对象做一个保存
+                var btn=$('#btn');
+                // proxy可以改变this的指向
+                btn.on('click',$.proxy(this.handleButton,this))
+            },
+            handleButton:function(){
+                // console.log("111")
+                var input=$('#input').val();
+                var ul=$('ul');
+                ul.append("<li>"+input+"</li>");
+                // 清空
+                var input=$('#input').val("");
+
+            }
+            
+        })
+        var page=new Page();
+        page.init();
+    </script>
+</body>
+</html>

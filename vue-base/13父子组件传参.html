@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>父子组件传值</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js"></script>
+</head>
+<body>
+   
+    <div id="root">
+         <!-- 父组件通过属性的方式向子组件传递数据   父组件@监听事件-->
+        <counter :count='0' @change='handleIncrease'></counter>
+        <counter :count='1' @change='handleIncrease'></counter>
+        <div>{{total}}</div>
+    </div>
+    <script>
+        //心得：vue的组件的props属性支持驼峰命名,不支持连接线命名,使用是用连接线进行赋值或者数据绑定!
+            var counter={
+                //子组件接受数据(父传子，通过属性传递)
+                props:['count'],
+                // 子组件data必须是函数
+                data:function(){
+                    return{
+                        number:this.count
+                    }
+                },
+                // 使用
+                template:"<div @click='handleClick'>{{number}}</div>",
+                methods:{
+                    // 
+                    handleClick:function(){
+                        // 子组件绝对不能修改父组件传过来的内容，
+                        // 因为接收到的如果是引用类型的话，一旦修改会对其他组件造成影响
+                        // 在上面data做一次拷贝即可解决
+                        this.number+=2;
+                        // 子向父传值---通过向外触发事件
+                        this.$emit('change',2)
+                    }
+                }
+            }
+            var vm=new Vue({
+                el:'#root',
+                data:{
+                    total:1
+                },
+                components:{
+                    counter:counter
+                },
+                methods:{
+                    // step 步长参数 接受触发事件第二个参数
+                    handleIncrease:function(step){
+                        this.total+=step;
+                    }
+                }
+            })
+    </script>
+</body>
+</html>

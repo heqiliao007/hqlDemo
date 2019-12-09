@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+    .div1{
+        width:300px;
+        height: 300px;
+        border: 2px solid #ccc;
+        padding: 20px;
+        box-sizing: content-box;
+    }
+    .div2{
+        width:300px;
+        height: 300px;
+        border: 2px solid #ccc;
+        padding: 20px;
+        box-sizing: border-box;
+    }
+    </style>
+</head>
+<body>
+    <div class="div1">1111</div>
+    <div class="div2">1111</div>
+    <script type="text/javascript">
+    var a='1'+2+3;
+    var b=4+5+'6';
+    document.write(a);
+    //123
+    document.write(b);
+    //96
+    </script>
+    <script>
+	   setTimeout(function () {
+        console.log(1);
+    });
+    new Promise(function(resolve,reject){
+        console.log(2)
+        resolve(3)
+    }).then(function(val){
+        console.log(val);
+    })
+    console.log(4);
+    //2431
+    </script>
+    <script>
+    	let aa = () => {
+		  setTimeout(() => {
+		    console.log('任务队列函数1')
+		  }, 0)
+		  for (let i = 0; i < 500; i++) {
+		    console.log('a的for循环')
+		  }
+		  console.log('a事件执行完')
+		}
+		let bb = () => {
+		  setTimeout(() => {
+		    console.log('任务队列函数2')
+		  }, 0)
+		  for (let i = 0; i < 500; i++) {
+		    console.log('b的for循环')
+		  }
+		  console.log('b事件执行完')
+		}
+		let cc = () => {
+		  setTimeout(() => {
+		    console.log('任务队列函数3')
+		  }, 0)
+		  for (let i = 0; i < 500; i++) {
+		    console.log('c的for循环')
+		  }
+		  console.log('c事件执行完')
+		}
+		aa();
+		bb();
+		cc();
+//a的for循环
+//a事件执行完
+//b的for循环
+//b事件执行完
+//c的for循环
+//c事件执行完
+//任务队列函数1
+//任务队列函数2
+//任务队列函数3
+// 当a、b、c函数都执行完成之后，三个setTimeout才会依次执行
+//js 异步执行的运行机制。
+//所有任务都在主线程上执行，形成一个执行栈。
+//主线程之外，还存在一个"任务队列"（task queue）。只要异步任务有了运行结果，就在"任务队列"之中放置一个事件。
+//一旦"执行栈"中的所有同步任务执行完毕，系统就会读取"任务队列"。那些对应的异步任务，结束等待状态，进入执行栈并开始执行。
+
+    </script>
+</body>
+</html>

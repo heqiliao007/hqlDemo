@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/Animate.css">
+    <style>
+        .fade-enter{
+            opacity: 0;
+        }
+        .fade-enter-active{
+            transition: opacity 3s;
+        }
+        .fade-leave-to{
+            opacity: 0;
+        }
+        .fade-leave-active{
+            transition: opacity 3s;
+        }
+    </style>
+</head>
+<body>
+    <div id="root">
+        <!--appear第一次显示的时候也有动画 type='transition' 以transition的时间为准-->
+        <!--:duration自定义动画时长  -->
+        <transition :duration="enter:5000,leave:1000"
+                    name='fade'
+                    appear
+                    enter-active-class='animated flash'
+                    leave-active-class='animated shake'
+                    appear--active-class='animated flash'
+        >
+            <div v-show='show'>hellow world</div>
+        </transition>
+        <button @click='handle'>toggle</button>
+    </div>
+    <script>
+        var vm=new Vue({
+            el:"#root",
+            data:{
+                show:true
+            },
+            methods:{
+                handle:function(){
+                    this.show=!this.show;
+                }
+            }
+        })
+    </script>
+    
+</body>
+</html>

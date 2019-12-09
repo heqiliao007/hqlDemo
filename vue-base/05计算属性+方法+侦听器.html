@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <!--方法 {{fullName()}} -->
+        {{fullName}}
+        {{age}}
+    </div>
+    <script>
+    var vm=new Vue({
+        el:"#app",
+        data:{
+            firstName:'lindan',
+            lastName:'He',
+            age:17,
+            // watch冗余数据处理
+            fullName:'linda He'
+        },
+        // 计算属性 缓存机制 返回的是一个值
+        // computed:{
+        //     fullName:function(){
+        //         console.log("计算了一次！")
+        //         return this.firstName+" "+this.lastName
+        //     }
+        // },
+        // methods:{
+        //     fullName:function(){
+        //         console.log("计算了一次！")
+        //         return this.firstName+" "+this.lastName
+        //     }
+        // }
+        watch:{
+            // 每个都要侦听
+                firstName:function(){
+                    console.log("计算了一次！");
+                    this.fullName=this.firstName+" "+this.lastName;
+                },
+                lastName:function(){
+                    console.log("计算了一次！");
+                    this.fullName=this.firstName+" "+this.lastName;
+                }
+        }
+        
+    })
+    </script>
+</body>
+    
+</html>

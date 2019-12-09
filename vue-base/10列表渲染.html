@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js"></script>
+
+</head>
+<body>
+    <div id="app">
+        <!-- 数组对象 唯一的key值 -->
+        <div v-for='(item,index) of list' :key='item.id'>
+            {{item.text}}----{{item.id}}
+        </div>
+        <!--对象-->
+        <div v-for='(item,key,index) of userInfo'>
+           <!-- item是键值，key是键名 -->
+            {{item}}----{{key}}----{{index}}
+        </div>
+        <div v-for='(item,index) of list1'>
+            <!--数组 item是键值，key是键名 index是索引-->
+             {{item}}----{{index}}
+         </div>
+    </div>
+
+    <script>
+    var vm=new Vue({
+        el:'#app',
+        data:{
+            // 数组的遍历
+            list:[{
+                id:'11',
+                text:"hello"
+            },{
+                id:'22',
+                text:'dell'
+            },{
+                id:'33',
+                text:'linda'
+            }],
+            userInfo:{
+                name:'avg',
+                age:22,
+                gender:'女',
+                salary:'secret'
+            },
+            list1:[1,2,3,4]
+        }
+    })
+    </script>
+</body>
+</html>

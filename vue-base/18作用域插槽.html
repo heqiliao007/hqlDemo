@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js"></script>
+</head>
+<body>
+    <div id="root">
+        <Child>
+            <!-- 传递一个slot 最外要用一个template+slot-scope属性声明 props随便取的名字-->
+            <!-- 作用域插槽 -->
+            <template slot-scope='props'>
+                <!-- 父组件通过属性接受传递过来的数据 -->
+                <!-- 可以渲染li标签、hn标签 -->
+                <h1>{{props.item}}</h1>
+            </template>
+        </Child>
+    </div>
+    <script>
+        Vue.component('Child', {
+            data:function(){
+                return{
+                    list:[1,2,3,4]
+                }
+            },
+            // template:`<div>
+            //             <ul>
+            //                 <li v-for='item of list'>{{item}}</li>
+            //             </ul>
+            //           </div>`
+
+            // v-bind传递数据
+            // 插槽 列表怎么循环不是我child控制的，而是外部告诉组件每一项怎么渲染
+            template:`<div>
+                        <ul>
+                            <slot v-for='item of list'
+                                  :item=item>{{item}}</slot>
+                        </ul>
+                      </div>`
+        })
+
+        var vm=new Vue({
+            el:"#root"
+        })
+    </script>
+</body>
+</html>

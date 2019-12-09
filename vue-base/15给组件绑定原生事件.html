@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js"></script>
+</head>
+<body>
+    <!-- 推荐你始终使用 kebab-case 的事件名 -->
+    <div id="root">
+        <!-- 事件修饰符native 原生点击事件 -->
+        <!-- 绑定的是自定义事件 鼠标点击触发的是原生事件 所以需要在子组件
+        元素上去绑定原生事件，并通过$.emit向外触发 这种两层传递方式很麻烦-->
+        <!-- 父组件想在子组件上监听自己的click的话，需要加上native修饰符 -->
+        <Child @click.native='handleClick'></Child>
+    </div>
+    <script>
+        Vue.component('Child',{
+            template:'<div>Child</div>',
+            // 自定义事件 元素上绑定的就是原生事件
+            // template:'<div @click="handle">Child</div>',
+            // methods:{
+            //     handle:function(){
+            //         alert("111");
+            //         // 向外触发自定义事件
+            //         this.$emit("click");
+            //     }
+            // }
+        })
+        var vm=new Vue({
+            el:'#root',
+            methods:{
+                handleClick:function(){
+                    alert("click");
+                }
+            }
+        })
+    </script>
+</body>
+</html>

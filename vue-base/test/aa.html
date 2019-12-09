@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<link rel="stylesheet" href="aa.css" />
+	</head>
+	<body>
+		<div class="reply">
+			<div class="praise">
+				<span class="good">
+					<img src="/fdvideoweb2.0/static/mobile/fdsm/img/好.png" alt="">
+				</span>
+				<span>我拉啦、小鱼、</span>
+				<span>等2个人觉得很赞</span>
+			</div>
+			<div class="com_rec">
+				<a href="javascript:" replyid="1c60d745450f4d678702f13530e753c6">
+					<span class="reply-name">我拉啦回复</span>我拉啦：<span>图片回复是否成功</span></a>
+					<a href="javascript:" replyid="91407a96ec82430fa2da13dd42a9a12d"><span class="reply-name">我拉啦回复</span>小鱼：<span>回复小鱼的评论</span></a>
+					<a href="javascript:" replyid="a02aa027eb2f4317919add9d752acef3">小鱼：<span>评论我啦啦的打卡，有一张图片</span><br><img src="http://l21.hisw.cn/img/201904031009220443t73repi0m.JPG"></a>
+			</div>
+		</div>
+		<div class="reply">
+			<div class="praise">
+				<span class="good">
+					<img src="/fdvideoweb2.0/static/mobile/fdsm/img/好.png" alt="">
+				</span>
+				<span>我拉啦、小鱼、</span>
+				<span>等2个人觉得很赞</span>
+			</div>
+		</div>
+		<div class="reply">
+			<div class="praise">
+				<span class="good">
+					<img src="/fdvideoweb2.0/static/mobile/fdsm/img/好.png" alt="">
+				</span>
+				<span>我拉啦、小鱼、</span>
+				<span>等2个人觉得很赞</span>
+			</div>
+		</div>
+	</body>
+	<script type="text/javascript" src="jquery-1.11.0.min.js" ></script>
+	<script>
+		$('.reply').each(function(){
+			if($(this).children('.com_rec').length!= 0){
+				$(this).children('.praise').css('border-radius','0');
+			}
+		})
+	</script>
+</html>

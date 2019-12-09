@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js"></script>
+</head>
+<body>
+    <div id="root">
+        <!-- 1.传值标签 -->
+        <!-- <Child content='<p>Dell</p>'></Child> -->
+        <!-- 2.slot插槽 可以放标签 没标签时还可以定义默认值-->
+        <Child>
+            <h1>Dell</h1>
+        </Child>
+        <!--3. 具名插槽可以一次性引入多个区域 -->
+        <body-content>
+            <div class="header" slot='header'>header</div>
+            <!-- <div class="footer" slot='footer'>footer</div> -->
+        </body-content>
+    </div>
+    <script>
+        Vue.component('Child',{
+            props:['content'],
+            // 转义拼接 必须外层包裹一个div标签
+            // template:`<div>
+            //             <p>Hello</p>
+            //             <div v-html='this.content'></div>
+            //           </div>`
+            template:`<div>
+                         <p>Hello</p>
+                         <slot>默认内容</slot>
+                       </div>`
+        })
+        // 插槽更方便向子组件传递dom属性
+        Vue.component('body-content',{
+            //具名插槽 由插槽传递内容就先传递插槽内的,没有则显示slot标签内默认定义的内容
+            template:`<div>
+                         <slot name='header'>default header</slot>
+                         <div class='content'>Hello</div>
+                         <slot name='footer'><h1>default footer</h1></slot>
+                      </div>`
+        })
+        var vm=new Vue({
+            el:"#root"
+        })
+    </script>
+</body>
+</html>

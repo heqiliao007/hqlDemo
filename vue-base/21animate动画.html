@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/Animate.css">
+    <style>
+    @keyframes bounce-in{
+        0%{
+            transform: scale(0);
+        }
+        50%{
+            transform: scale(1.5);
+        }
+        100%{
+            transform: scale(1);
+        }
+    }
+    /* 显示-放大-缩小 .fade-enter-active*/
+    .enter{
+        transform-origin: left center;
+        animation: bounce-in 3s;
+    }
+    /* 隐藏-放大-缩小.fade-leave-active */
+    .leave{
+        transform-origin: left center;
+        animation: bounce-in 3s reverse;
+    }
+    </style>
+</head>
+<body>
+    <div id="root">
+        <transition name='fade' enter-active-class='animated flash'
+                    leave-active-class='animated shake'
+        >
+            <div v-show='show'>hellow world</div>
+        </transition>
+        <button @click='handle'>toggle</button>
+    </div>
+    <script>
+        var vm=new Vue({
+            el:"#root",
+            data:{
+                show:true
+            },
+            methods:{
+                handle:function(){
+                    this.show=!this.show;
+                }
+            }
+        })
+    </script>
+    
+</body>
+</html>
